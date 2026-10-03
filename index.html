@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Trivia">
+<meta name="theme-color" content="#0e0a1f">
+<title>Trivia de estrellas</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<section id="s-inicio">
+  <div class="portada">
+    <p class="antetitulo" style="color:#FFA150">Astrolaris</p>
+    <h1>Trivia de estrellas</h1>
+  </div>
+  <button id="b-empezar" class="principal">Empezar ronda</button>
+  <p id="t-guardadas"></p>
+  <button id="b-ir-ajustes" class="secundario">Datos</button>
+</section>
+
+<section id="s-pregunta" hidden>
+  <header class="barra">
+    <div class="nivel">
+      <p id="t-nivel"></p>
+      <ol class="escalera" aria-hidden="true">
+        <li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li>
+      </ol>
+    </div>
+    <div id="comodines">
+      <button data-c="50/50">50/50</button>
+      <button data-c="cambiar">Cambiar pregunta</button>
+      <button data-c="pista">Pista</button>
+    </div>
+  </header>
+  <h2 id="t-enunciado"></h2>
+  <div id="opciones"></div>
+  <p id="t-pista" hidden></p>
+  <div id="acciones">
+    <button id="b-confirmar" class="principal" disabled>Confirmar respuesta</button>
+    <button id="b-seguir" class="principal" hidden></button>
+    <button id="b-abandonar" class="secundario">Abandonar ronda</button>
+  </div>
+</section>
+
+<section id="s-fin" hidden>
+  <p class="antetitulo">Fin de la ronda</p>
+  <h2 id="t-final"></h2>
+  <button id="b-nueva" class="principal">Nueva ronda</button>
+</section>
+
+<section id="s-ajustes" hidden>
+  <h2>Datos</h2>
+  <p id="t-resumen"></p>
+  <button id="b-exportar" class="principal">Exportar CSV</button>
+  <button id="b-borrar" class="secundario">Borrar todos los datos</button>
+  <button id="b-volver" class="secundario">Volver</button>
+</section>
+
+<script>
+/* Solo visual: copia el número de "Nivel N de 7" a <body data-nivel> para iluminar la escalera. */
+(function () {
+  var t = document.getElementById('t-nivel');
+  new MutationObserver(function () {
+    var m = /\d+/.exec(t.textContent);
+    document.body.dataset.nivel = m ? m[0] : '';
+  }).observe(t, { childList: true, characterData: true, subtree: true });
+})();
+</script>
+<script src="banco.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

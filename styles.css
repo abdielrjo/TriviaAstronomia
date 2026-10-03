@@ -1,0 +1,186 @@
+/* Trivia de estrellas — tema oscuro para iPad (táctil, sin recursos externos) */
+:root{
+  --fondo:#0e0a1f;
+  --superficie:#1c1535;
+  --superficie-2:#2b1f4d;
+  --borde:#4a3b72;
+  --texto:#ffffff;
+  --texto-2:#FFC7EC;
+  --oro:#FFA150;
+  --oro-suave:#3f2a24;
+  --verde:#FFA150;
+  --rojo:#C23969;
+  --radio:1rem;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;font-size:20px;background:var(--fondo)}
+body{
+  margin:0 auto;max-width:64rem;min-height:100vh;min-height:100dvh;
+  padding:max(1.25rem,env(safe-area-inset-top)) max(1.5rem,env(safe-area-inset-right)) max(1.25rem,env(safe-area-inset-bottom)) max(1.5rem,env(safe-area-inset-left));
+  font:1rem/1.35 -apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  color:var(--texto);background:var(--fondo);
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+  overscroll-behavior:none;
+}
+/* Cielo: pocas estrellas tenues en los bordes, centro limpio */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(1.5px 1.5px at 6% 12%,#fff8 50%,#0000 51%),
+    radial-gradient(1px 1px at 14% 78%,#fff6 50%,#0000 51%),
+    radial-gradient(2px 2px at 92% 9%,#fff7 50%,#0000 51%),
+    radial-gradient(1px 1px at 84% 22%,#fff5 50%,#0000 51%),
+    radial-gradient(1.5px 1.5px at 96% 64%,#fff6 50%,#0000 51%),
+    radial-gradient(1px 1px at 3% 46%,#fff5 50%,#0000 51%),
+    radial-gradient(1px 1px at 88% 92%,#fff5 50%,#0000 51%),
+    radial-gradient(1.5px 1.5px at 22% 4%,#fff5 50%,#0000 51%),
+    radial-gradient(1px 1px at 70% 3%,#fff4 50%,#0000 51%),
+    radial-gradient(90% 60% at 100% 0%,#0D4F8355 0%,#0000 70%),radial-gradient(90% 60% at 0% 100%,#61045F66 0%,#0000 70%),var(--fondo);
+}
+[hidden]{display:none!important}
+section{min-height:calc(100dvh - 2.5rem);display:flex;flex-direction:column}
+h1,h2,p{margin:0;text-wrap:pretty}
+
+/* ---------- Botones ---------- */
+button{
+  font:inherit;color:inherit;margin:0;cursor:pointer;
+  min-height:3.5rem;padding:.75rem 1.4rem;
+  border:2px solid var(--borde);border-radius:var(--radio);
+  background:var(--superficie);
+  transition:transform .08s,background-color .15s,border-color .15s,opacity .15s;
+}
+button:active:not(:disabled){transform:scale(.98)}
+button:disabled{cursor:default}
+.principal{
+  font-weight:700;font-size:1.3rem;min-height:4.5rem;padding:1rem 2rem;
+  background:var(--oro);border-color:var(--oro);color:#1a0d05;
+}
+.principal:active:not(:disabled){background:#FFB877}
+.principal:disabled{background:transparent;border-color:var(--borde);color:var(--texto-2);opacity:.7}
+.secundario{background:transparent;color:var(--texto-2);font-weight:600}
+.secundario:active{background:var(--superficie)}
+
+.antetitulo{font-size:.85rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--oro)}
+
+/* ---------- Inicio ---------- */
+#s-inicio{align-items:center;justify-content:center;text-align:center;gap:1.5rem}
+.portada{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.5rem}
+#s-inicio h1{font-size:4rem;line-height:1.05;letter-spacing:-.02em;font-weight:800}
+.reglas{font-size:1.25rem;color:var(--texto-2)}
+#b-empezar{min-width:20rem;font-size:1.6rem;min-height:5.5rem;border-radius:3rem}
+#t-guardadas{position:fixed;right:calc(max(1.5rem,env(safe-area-inset-right)) + 9rem);bottom:max(1.25rem,env(safe-area-inset-bottom));line-height:3.5rem;font-size:.75rem;color:var(--texto-2);opacity:.55}
+#b-ir-ajustes{position:fixed;right:max(1.5rem,env(safe-area-inset-right));bottom:max(1.25rem,env(safe-area-inset-bottom));min-width:8rem}
+
+/* ---------- Pregunta ---------- */
+#s-pregunta{gap:1.25rem}
+.barra{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem 1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--borde)}
+.nivel{display:flex;flex-direction:column;gap:.5rem}
+#t-nivel{font-size:1.5rem;font-weight:800;font-variant-numeric:tabular-nums}
+.escalera{list-style:none;margin:0;padding:0;display:flex;gap:.4rem}
+.escalera li{
+  width:2.2rem;height:2.2rem;border-radius:50%;display:grid;place-items:center;
+  font-size:.95rem;font-weight:700;font-variant-numeric:tabular-nums;
+  border:2px solid var(--borde);color:var(--texto-2);
+}
+/* niveles superados */
+body[data-nivel="2"] .escalera li:nth-child(-n+1),
+body[data-nivel="3"] .escalera li:nth-child(-n+2),
+body[data-nivel="4"] .escalera li:nth-child(-n+3),
+body[data-nivel="5"] .escalera li:nth-child(-n+4),
+body[data-nivel="6"] .escalera li:nth-child(-n+5),
+body[data-nivel="7"] .escalera li:nth-child(-n+6){background:var(--oro-suave);border-color:var(--oro-suave);color:var(--oro)}
+/* nivel actual */
+body[data-nivel="1"] .escalera li:nth-child(1),
+body[data-nivel="2"] .escalera li:nth-child(2),
+body[data-nivel="3"] .escalera li:nth-child(3),
+body[data-nivel="4"] .escalera li:nth-child(4),
+body[data-nivel="5"] .escalera li:nth-child(5),
+body[data-nivel="6"] .escalera li:nth-child(6),
+body[data-nivel="7"] .escalera li:nth-child(7){background:var(--oro);border-color:var(--oro);color:#1a0d05;box-shadow:0 0 0 4px #FFA15033,0 0 18px #FFA15066}
+
+/* Comodines */
+#comodines{display:grid;grid-template-columns:repeat(3,auto);gap:.5rem}
+#comodines::before{
+  content:"Comodines · puede usar 2";grid-column:1/-1;
+  font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--oro);
+}
+#comodines:has(.gastado)::before{content:"Comodines · le queda 1"}
+#comodines:has(.gastado ~ .gastado)::before{content:"Comodines · ya usó los 2";color:var(--texto-2)}
+#comodines button{
+  min-height:3.75rem;padding:.5rem 1.1rem;font-weight:700;font-size:1.05rem;
+  border-color:var(--oro);color:var(--oro);background:transparent;
+}
+#comodines button:active:not(:disabled){background:var(--oro-suave)}
+#comodines button:disabled{opacity:.4;border-style:dashed;border-color:var(--borde);color:var(--texto-2)}
+#comodines .gastado{text-decoration:line-through;text-decoration-thickness:2px}
+#comodines button.gastado:disabled{opacity:.35}
+/* Tras responder, los comodines aún disponibles se ven en pausa, no perdidos */
+#s-pregunta:has(#b-seguir:not([hidden])) #comodines button:disabled:not(.gastado){opacity:.55;border-style:solid;border-color:var(--oro);color:var(--oro)}
+#comodines:has(.gastado ~ .gastado) button:disabled:not(.gastado){opacity:.3}
+
+#t-enunciado{font-size:2.3rem;line-height:1.2;font-weight:700;letter-spacing:-.01em;margin-top:.25rem}
+
+/* Opciones: letras fijas por posición (A–D), no revelan la correcta */
+#opciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:.75rem}
+#opciones button{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1rem;
+  width:100%;min-height:5.25rem;padding:.85rem 1.25rem .85rem .9rem;text-align:left;
+  font-size:1.5rem;font-weight:600;line-height:1.25;
+  background:var(--superficie);border-color:var(--borde);
+}
+#opciones button::before{
+  width:2.6rem;height:2.6rem;border-radius:50%;display:grid;place-items:center;
+  font-size:1.2rem;font-weight:800;background:var(--superficie-2);color:var(--texto);
+}
+#opciones button:nth-child(1)::before{content:"A"}
+#opciones button:nth-child(2)::before{content:"B"}
+#opciones button:nth-child(3)::before{content:"C"}
+#opciones button:nth-child(4)::before{content:"D"}
+#opciones button:active:not(:disabled){background:var(--superficie-2)}
+#opciones .elegida{border-color:#FFC7EC;border-width:3px;background:#61045F;outline:none}
+#opciones .elegida::before{background:#FFC7EC;color:#61045F}
+#opciones button:disabled{opacity:.4}
+#opciones .correcta,#opciones .incorrecta{opacity:1!important;color:#0e0a1f}
+#opciones .correcta{background:var(--verde);border-color:var(--verde)}
+#opciones .incorrecta{background:var(--rojo);border-color:var(--rojo);color:#fff}
+#opciones .correcta::before,#opciones .incorrecta::before{background:#0e0a1f;color:var(--texto)}
+#opciones .incorrecta::after{background:#0000002e}
+#opciones .correcta::after,#opciones .incorrecta::after{
+  font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  padding:.3rem .6rem;border-radius:.5rem;background:#0e0a1f26;
+}
+#opciones .correcta::after{content:"Correcta"}
+#opciones .incorrecta::after{content:"Elegida"}
+
+#t-pista{
+  font-size:1.4rem;line-height:1.35;font-weight:500;
+  padding:1rem 1.25rem;border-radius:var(--radio);
+  border:2px dashed var(--texto-2);background:#FFC7EC14;color:var(--texto);
+}
+
+#acciones{display:flex;align-items:center;gap:1rem;margin-top:auto;padding-top:.5rem}
+#b-confirmar,#b-seguir{margin-left:auto;min-width:20rem}
+#b-abandonar{order:-1;min-height:3.5rem;font-size:.95rem}
+
+/* ---------- Fin ---------- */
+#s-fin{align-items:center;justify-content:center;text-align:center;gap:1.25rem}
+#t-final{font-size:3.4rem;line-height:1.1;font-weight:800;letter-spacing:-.02em;margin-bottom:2rem}
+#b-nueva{min-width:20rem;font-size:1.6rem;min-height:5.5rem;border-radius:3rem}
+
+/* ---------- Datos ---------- */
+#s-ajustes{justify-content:center;gap:1rem;max-width:32rem;margin:0 auto;width:100%}
+#s-ajustes h2{font-size:2.4rem;font-weight:800}
+#t-resumen{font-size:1.3rem;color:var(--texto-2);margin-bottom:1rem}
+#s-ajustes button{width:100%}
+#b-borrar{color:#FFC7EC;border-color:#C2396999}
+#b-borrar:active{background:#C239692e}
+
+/* iPad en vertical o pantallas más angostas */
+@media (max-width:820px){
+  #s-inicio h1{font-size:3.2rem}
+  #t-enunciado{font-size:2.1rem}
+  #comodines{width:100%;grid-template-columns:repeat(3,1fr)}
+  #b-confirmar,#b-seguir{min-width:0;flex:1}
+}
